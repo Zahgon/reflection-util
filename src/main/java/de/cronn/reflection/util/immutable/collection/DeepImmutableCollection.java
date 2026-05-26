@@ -13,99 +13,100 @@ import java.util.Map;
 import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
-public class DeepImmutableCollection<E> extends AbstractCollection<E>
-    implements Collection<E>, Immutable, Serializable {
+public class DeepImmutableCollection<E> extends AbstractCollection<E> implements Collection<E>, Immutable, Serializable {
 
-  @Serial private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-  private final Collection<E> delegate;
-  protected final ImmutableProxyOption[] options;
-  private final String immutableMessage;
+    private final Collection<E> delegate;
 
-  private final Map<E, E> immutableProxyCache = new IdentityHashMap<>();
+    protected final ImmutableProxyOption[] options;
 
-  public DeepImmutableCollection(Collection<E> delegate, ImmutableProxyOption[] options) {
-    this(delegate, options, "This collection is immutable");
-  }
+    private final String immutableMessage;
 
-  DeepImmutableCollection(
-      Collection<E> delegate, ImmutableProxyOption[] options, String immutableMessage) {
-    this.delegate = Objects.requireNonNull(delegate);
-    this.options = options;
-    this.immutableMessage = immutableMessage;
-  }
+    private final Map<E, E> immutableProxyCache = new IdentityHashMap<>();
 
-  E getImmutableElement(E element) {
-    return immutableProxyCache.computeIfAbsent(element, this::createImmutableElement);
-  }
+    public DeepImmutableCollection(Collection<E> delegate, ImmutableProxyOption[] options) {
+        this(delegate, options, "This collection is immutable");
+    }
 
-  E createImmutableElement(E value) {
-    return ImmutableProxy.create(value, options);
-  }
+    DeepImmutableCollection(Collection<E> delegate, ImmutableProxyOption[] options, String immutableMessage) {
+        this.delegate = Objects.requireNonNull(delegate);
+        this.options = options;
+        this.immutableMessage = immutableMessage;
+    }
 
-  @Override
-  public int size() {
-    return delegate.size();
-  }
+    E getImmutableElement(E element) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public boolean isEmpty() {
-    return delegate.isEmpty();
-  }
+    E createImmutableElement(E value) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public boolean contains(Object o) {
-    return delegate.contains(o);
-  }
+    @Override
+    public int size() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @NotNull
-  @Override
-  public Iterator<E> iterator() {
-    return new ImmutableIterator<>(this, delegate.iterator(), immutableMessage);
-  }
+    @Override
+    public boolean isEmpty() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public boolean containsAll(@NotNull Collection<?> c) {
-    return delegate.containsAll(c);
-  }
+    @Override
+    public boolean contains(Object o) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    return delegate.equals(o);
-  }
+    @NotNull
+    @Override
+    public Iterator<E> iterator() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public int hashCode() {
-    return delegate.hashCode();
-  }
+    @Override
+    public boolean containsAll(@NotNull Collection<?> c) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public boolean add(E t) {
-    throw new UnsupportedOperationException(immutableMessage);
-  }
+    @Override
+    public boolean equals(Object o) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public boolean remove(Object o) {
-    throw new UnsupportedOperationException(immutableMessage);
-  }
+    @Override
+    public int hashCode() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public boolean addAll(@NotNull Collection<? extends E> c) {
-    throw new UnsupportedOperationException(immutableMessage);
-  }
+    @Override
+    public boolean add(E t) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public boolean removeAll(@NotNull Collection<?> c) {
-    throw new UnsupportedOperationException(immutableMessage);
-  }
+    @Override
+    public boolean remove(Object o) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public boolean retainAll(@NotNull Collection<?> c) {
-    throw new UnsupportedOperationException(immutableMessage);
-  }
+    @Override
+    public boolean addAll(@NotNull Collection<? extends E> c) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public void clear() {
-    throw new UnsupportedOperationException(immutableMessage);
-  }
+    @Override
+    public boolean removeAll(@NotNull Collection<?> c) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    @Override
+    public boolean retainAll(@NotNull Collection<?> c) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

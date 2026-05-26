@@ -17,95 +17,58 @@ import net.bytebuddy.matcher.ElementMatchers;
 
 public final class GenericImmutableProxyForwarder {
 
-  private static final Map<Method, Boolean> shouldProxyReturnValueCache = new ConcurrentHashMap<>();
+    private static final Map<Method, Boolean> shouldProxyReturnValueCache = new ConcurrentHashMap<>();
 
-  private GenericImmutableProxyForwarder() {}
+    private GenericImmutableProxyForwarder() {
+    }
 
-  @RuntimeType
-  public static Object forward(
-      @Origin Method method,
-      @FieldValue(ImmutableProxy.DELEGATE_FIELD_NAME) Object delegate,
-      @FieldValue(ImmutableProxy.OPTIONS) ImmutableProxyOption[] options,
-      @AllArguments Object[] args)
-      throws InvocationTargetException, IllegalAccessException {
-    Object value = method.invoke(delegate, args);
-    if (ImmutableProxy.isImmutable(value)) {
-      return value;
+    @RuntimeType
+    public static Object forward(@Origin Method method, @FieldValue(ImmutableProxy.DELEGATE_FIELD_NAME) Object delegate, @FieldValue(ImmutableProxy.OPTIONS) ImmutableProxyOption[] options, @AllArguments Object[] args) throws InvocationTargetException, IllegalAccessException {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-    if (!shouldProxyReturnValue(method)) {
-      return value;
-    }
-    if (value instanceof Collection) {
-      return createImmutableCollection(value, method, options);
-    } else if (value instanceof Map) {
-      return createImmutableMap(value, method, options);
-    } else {
-      return ImmutableProxy.create(value, options);
-    }
-  }
 
-  @SuppressWarnings("boxing")
-  private static boolean shouldProxyReturnValue(Method method) {
-    return shouldProxyReturnValueCache
-        .computeIfAbsent(
-            method,
-            m -> {
-              if (isCloneMethod(m)) {
+    @SuppressWarnings("boxing")
+    private static boolean shouldProxyReturnValue(Method method) {
+        return shouldProxyReturnValueCache.computeIfAbsent(method, m -> {
+            if (isCloneMethod(m)) {
                 return false;
-              }
-              ReadOnly readOnlyAnnotation = ClassUtils.findAnnotation(m, ReadOnly.class);
-              return readOnlyAnnotation == null || readOnlyAnnotation.proxyReturnValue();
-            })
-        .booleanValue();
-  }
-
-  private static boolean isCloneMethod(Method method) {
-    return ElementMatchers.isClone().matches(new MethodDescription.ForLoadedMethod(method));
-  }
-
-  private static Object createImmutableCollection(
-      Object value, Method method, ImmutableProxyOption[] options) {
-    Class<?> returnType = method.getReturnType();
-    if (returnType.equals(Set.class)) {
-      Set<?> collection = (Set<?>) value;
-      return ImmutableProxy.create(collection, options);
-    } else if (returnType.equals(List.class)) {
-      List<?> collection = (List<?>) value;
-      return ImmutableProxy.create(collection, options);
-    } else if (returnType.equals(Collection.class) || returnType.equals(Iterable.class)) {
-      Collection<?> collection = (Collection<?>) value;
-      return ImmutableProxy.create(collection, options);
-    } else {
-      throw new UnsupportedOperationException(
-          "Cannot create immutable collection for "
-              + describeMethod(method)
-              + "."
-              + " The return type is unknown or too specific: "
-              + returnType
-              + "."
-              + " Consider to define a more generic type: Set/List/Collection");
+            }
+            ReadOnly readOnlyAnnotation = ClassUtils.findAnnotation(m, ReadOnly.class);
+            return readOnlyAnnotation == null || readOnlyAnnotation.proxyReturnValue();
+        }).booleanValue();
     }
-  }
 
-  private static Object createImmutableMap(
-      Object value, Method method, ImmutableProxyOption[] options) {
-    Class<?> returnType = method.getReturnType();
-    if (returnType.equals(Map.class)) {
-      Map<?, ?> map = (Map<?, ?>) value;
-      return ImmutableProxy.create(map, options);
-    } else {
-      throw new UnsupportedOperationException(
-          "Cannot create immutable map for "
-              + describeMethod(method)
-              + "."
-              + " The return type is unknown or too specific: "
-              + returnType
-              + "."
-              + " Consider to define a more generic type: Map");
+    private static boolean isCloneMethod(Method method) {
+        return ElementMatchers.isClone().matches(new MethodDescription.ForLoadedMethod(method));
     }
-  }
 
-  private static String describeMethod(Method method) {
-    return method.getDeclaringClass().getSimpleName() + "." + method.getName();
-  }
+    private static Object createImmutableCollection(Object value, Method method, ImmutableProxyOption[] options) {
+        Class<?> returnType = method.getReturnType();
+        if (returnType.equals(Set.class)) {
+            Set<?> collection = (Set<?>) value;
+            return ImmutableProxy.create(collection, options);
+        } else if (returnType.equals(List.class)) {
+            List<?> collection = (List<?>) value;
+            return ImmutableProxy.create(collection, options);
+        } else if (returnType.equals(Collection.class) || returnType.equals(Iterable.class)) {
+            Collection<?> collection = (Collection<?>) value;
+            return ImmutableProxy.create(collection, options);
+        } else {
+            throw new UnsupportedOperationException("Cannot create immutable collection for " + describeMethod(method) + "." + " The return type is unknown or too specific: " + returnType + "." + " Consider to define a more generic type: Set/List/Collection");
+        }
+    }
+
+    private static Object createImmutableMap(Object value, Method method, ImmutableProxyOption[] options) {
+        Class<?> returnType = method.getReturnType();
+        if (returnType.equals(Map.class)) {
+            Map<?, ?> map = (Map<?, ?>) value;
+            return ImmutableProxy.create(map, options);
+        } else {
+            throw new UnsupportedOperationException("Cannot create immutable map for " + describeMethod(method) + "." + " The return type is unknown or too specific: " + returnType + "." + " Consider to define a more generic type: Map");
+        }
+    }
+
+    private static String describeMethod(Method method) {
+        return method.getDeclaringClass().getSimpleName() + "." + method.getName();
+    }
 }

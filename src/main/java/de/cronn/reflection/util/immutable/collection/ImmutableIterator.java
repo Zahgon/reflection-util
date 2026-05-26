@@ -4,30 +4,30 @@ import java.util.Iterator;
 
 class ImmutableIterator<E> implements Iterator<E> {
 
-  private final DeepImmutableCollection<E> collection;
-  private final Iterator<E> delegate;
-  private final String immutableMessage;
+    private final DeepImmutableCollection<E> collection;
 
-  ImmutableIterator(
-      DeepImmutableCollection<E> collection, Iterator<E> delegate, String immutableMessage) {
-    this.collection = collection;
-    this.delegate = delegate;
-    this.immutableMessage = immutableMessage;
-  }
+    private final Iterator<E> delegate;
 
-  @Override
-  public boolean hasNext() {
-    return delegate.hasNext();
-  }
+    private final String immutableMessage;
 
-  @Override
-  public E next() {
-    E element = delegate.next();
-    return collection.getImmutableElement(element);
-  }
+    ImmutableIterator(DeepImmutableCollection<E> collection, Iterator<E> delegate, String immutableMessage) {
+        this.collection = collection;
+        this.delegate = delegate;
+        this.immutableMessage = immutableMessage;
+    }
 
-  @Override
-  public void remove() {
-    throw new UnsupportedOperationException(immutableMessage);
-  }
+    @Override
+    public boolean hasNext() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    @Override
+    public E next() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

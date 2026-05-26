@@ -4,49 +4,47 @@ import java.io.Serial;
 import java.util.Map.Entry;
 import java.util.Set;
 
-class DeepImmutableEntrySet<K, V> extends DeepImmutableCollection<Entry<K, V>>
-    implements Set<Entry<K, V>> {
+class DeepImmutableEntrySet<K, V> extends DeepImmutableCollection<Entry<K, V>> implements Set<Entry<K, V>> {
 
-  @Serial private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-  private final DeepImmutableMap<K, V> immutableMap;
+    private final DeepImmutableMap<K, V> immutableMap;
 
-  DeepImmutableEntrySet(Set<Entry<K, V>> entrySet, DeepImmutableMap<K, V> immutableMap) {
-    super(entrySet, immutableMap.options, DeepImmutableMap.IMMUTABLE_MESSAGE);
-    this.immutableMap = immutableMap;
-  }
-
-  @Override
-  Entry<K, V> createImmutableElement(Entry<K, V> entry) {
-    return new ImmutableEntry<>(entry, immutableMap);
-  }
-
-  private static class ImmutableEntry<K, V> implements Entry<K, V> {
-
-    private final Entry<K, V> delegate;
-
-    private final transient DeepImmutableMap<K, V> immutableMap;
-
-    ImmutableEntry(Entry<K, V> delegate, DeepImmutableMap<K, V> immutableMap) {
-      this.delegate = delegate;
-      this.immutableMap = immutableMap;
+    DeepImmutableEntrySet(Set<Entry<K, V>> entrySet, DeepImmutableMap<K, V> immutableMap) {
+        super(entrySet, immutableMap.options, DeepImmutableMap.IMMUTABLE_MESSAGE);
+        this.immutableMap = immutableMap;
     }
 
     @Override
-    public K getKey() {
-      K key = delegate.getKey();
-      return immutableMap.getImmutableKey(key);
+    Entry<K, V> createImmutableElement(Entry<K, V> entry) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    @Override
-    public V getValue() {
-      V value = delegate.getValue();
-      return immutableMap.getImmutableValue(value);
-    }
+    private static class ImmutableEntry<K, V> implements Entry<K, V> {
 
-    @Override
-    public V setValue(V value) {
-      throw new UnsupportedOperationException(DeepImmutableMap.IMMUTABLE_MESSAGE);
+        private final Entry<K, V> delegate;
+
+        private final transient DeepImmutableMap<K, V> immutableMap;
+
+        ImmutableEntry(Entry<K, V> delegate, DeepImmutableMap<K, V> immutableMap) {
+            this.delegate = delegate;
+            this.immutableMap = immutableMap;
+        }
+
+        @Override
+        public K getKey() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+
+        @Override
+        public V getValue() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+
+        @Override
+        public V setValue(V value) {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
     }
-  }
 }

@@ -8,13 +8,10 @@ import net.bytebuddy.implementation.bind.annotation.Origin;
 
 public final class ImmutableProxyForwarderString {
 
-  private ImmutableProxyForwarderString() {}
+    private ImmutableProxyForwarderString() {
+    }
 
-  public static String forward(
-      @Origin Method method,
-      @FieldValue(ImmutableProxy.DELEGATE_FIELD_NAME) Object delegate,
-      @AllArguments Object[] args)
-      throws InvocationTargetException, IllegalAccessException {
-    return (String) method.invoke(delegate, args);
-  }
+    public static String forward(@Origin Method method, @FieldValue(ImmutableProxy.DELEGATE_FIELD_NAME) Object delegate, @AllArguments Object[] args) throws InvocationTargetException, IllegalAccessException {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

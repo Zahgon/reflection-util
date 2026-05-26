@@ -8,69 +8,51 @@ import java.util.stream.Collectors;
 
 final class MethodSignature implements Comparable<MethodSignature> {
 
-  private final String name;
-  private final Class<?> returnType;
-  private final Class<?>[] parameterTypes;
+    private final String name;
 
-  MethodSignature(Method method) {
-    this.name = method.getName();
-    this.returnType = method.getReturnType();
-    this.parameterTypes = method.getParameterTypes();
-  }
+    private final Class<?> returnType;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    private final Class<?>[] parameterTypes;
+
+    MethodSignature(Method method) {
+        this.name = method.getName();
+        this.returnType = method.getReturnType();
+        this.parameterTypes = method.getParameterTypes();
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    @Override
+    public boolean equals(Object o) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-    MethodSignature that = (MethodSignature) o;
-    return Objects.equals(name, that.name)
-        && Objects.equals(returnType, that.returnType)
-        && Arrays.equals(parameterTypes, that.parameterTypes);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(name, returnType, Arrays.hashCode(parameterTypes));
-  }
+    @Override
+    public int hashCode() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  String getName() {
-    return name;
-  }
+    String getName() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  Class<?> getReturnType() {
-    return returnType;
-  }
+    Class<?> getReturnType() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  private Class<?>[] getParameterTypes() {
-    return parameterTypes;
-  }
+    private Class<?>[] getParameterTypes() {
+        return parameterTypes;
+    }
 
-  @Override
-  public int compareTo(MethodSignature other) {
-    Comparator<MethodSignature> comparator =
-        Comparator.comparing(MethodSignature::getName)
-            .thenComparing(MethodSignature::getReturnType, Comparator.comparing(Class::getName))
-            .thenComparing(
-                MethodSignature::getParameterTypes,
-                Comparator.comparing(MethodSignature::mapToString));
-    return comparator.compare(this, other);
-  }
+    @Override
+    public int compareTo(MethodSignature other) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  private static String mapToString(Class<?>[] list) {
-    return Arrays.stream(list).map(Class::getName).collect(Collectors.joining(", "));
-  }
+    private static String mapToString(Class<?>[] list) {
+        return Arrays.stream(list).map(Class::getName).collect(Collectors.joining(", "));
+    }
 
-  @Override
-  public String toString() {
-    return getReturnType().getName()
-        + " "
-        + getName()
-        + "("
-        + mapToString(getParameterTypes())
-        + ")";
-  }
+    @Override
+    public String toString() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

@@ -4,58 +4,57 @@ import java.util.ListIterator;
 
 class ImmutableListIterator<E> implements ListIterator<E> {
 
-  private final DeepImmutableList<E> list;
-  private final ListIterator<E> delegate;
+    private final DeepImmutableList<E> list;
 
-  ImmutableListIterator(DeepImmutableList<E> list, ListIterator<E> delegate) {
-    this.list = list;
-    this.delegate = delegate;
-  }
+    private final ListIterator<E> delegate;
 
-  @Override
-  public boolean hasNext() {
-    return delegate.hasNext();
-  }
+    ImmutableListIterator(DeepImmutableList<E> list, ListIterator<E> delegate) {
+        this.list = list;
+        this.delegate = delegate;
+    }
 
-  @Override
-  public E next() {
-    E element = delegate.next();
-    return list.getImmutableElement(element);
-  }
+    @Override
+    public boolean hasNext() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public boolean hasPrevious() {
-    return delegate.hasPrevious();
-  }
+    @Override
+    public E next() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public E previous() {
-    E element = delegate.previous();
-    return list.getImmutableElement(element);
-  }
+    @Override
+    public boolean hasPrevious() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public int nextIndex() {
-    return delegate.nextIndex();
-  }
+    @Override
+    public E previous() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public int previousIndex() {
-    return delegate.previousIndex();
-  }
+    @Override
+    public int nextIndex() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public void remove() {
-    throw new UnsupportedOperationException("This list is immutable");
-  }
+    @Override
+    public int previousIndex() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public void set(E t) {
-    throw new UnsupportedOperationException("This list is immutable");
-  }
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public void add(E t) {
-    throw new UnsupportedOperationException("This list is immutable");
-  }
+    @Override
+    public void set(E t) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    @Override
+    public void add(E t) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

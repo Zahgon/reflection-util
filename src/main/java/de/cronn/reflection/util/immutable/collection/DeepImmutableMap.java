@@ -12,51 +12,53 @@ import java.util.Set;
 
 public class DeepImmutableMap<K, V> extends AbstractMap<K, V> implements Immutable, Serializable {
 
-  @Serial private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-  static final String IMMUTABLE_MESSAGE = "This map is immutable";
+    static final String IMMUTABLE_MESSAGE = "This map is immutable";
 
-  private final Map<K, V> delegate;
-  final ImmutableProxyOption[] options;
+    private final Map<K, V> delegate;
 
-  private final Map<K, K> immutableKeyCache = new IdentityHashMap<>();
-  private final Map<V, V> immutableValueCache = new IdentityHashMap<>();
+    final ImmutableProxyOption[] options;
 
-  public DeepImmutableMap(Map<K, V> delegate, ImmutableProxyOption[] options) {
-    this.delegate = delegate;
-    this.options = options;
-  }
+    private final Map<K, K> immutableKeyCache = new IdentityHashMap<>();
 
-  K getImmutableKey(K key) {
-    return immutableKeyCache.computeIfAbsent(key, this::createImmutableProxy);
-  }
+    private final Map<V, V> immutableValueCache = new IdentityHashMap<>();
 
-  private <T> T createImmutableProxy(T object) {
-    return ImmutableProxy.create(object, options);
-  }
+    public DeepImmutableMap(Map<K, V> delegate, ImmutableProxyOption[] options) {
+        this.delegate = delegate;
+        this.options = options;
+    }
 
-  V getImmutableValue(V value) {
-    return immutableValueCache.computeIfAbsent(value, this::createImmutableProxy);
-  }
+    K getImmutableKey(K key) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public V get(Object key) {
-    V value = delegate.get(key);
-    return getImmutableValue(value);
-  }
+    private <T> T createImmutableProxy(T object) {
+        return ImmutableProxy.create(object, options);
+    }
 
-  @Override
-  public Set<Entry<K, V>> entrySet() {
-    return new DeepImmutableEntrySet<>(delegate.entrySet(), this);
-  }
+    V getImmutableValue(V value) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public V put(K key, V value) {
-    throw new UnsupportedOperationException(IMMUTABLE_MESSAGE);
-  }
+    @Override
+    public V get(Object key) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-  @Override
-  public V remove(Object key) {
-    throw new UnsupportedOperationException(IMMUTABLE_MESSAGE);
-  }
+    @Override
+    public Set<Entry<K, V>> entrySet() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    @Override
+    public V put(K key, V value) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    @Override
+    public V remove(Object key) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }
